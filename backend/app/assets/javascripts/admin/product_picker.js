@@ -4,17 +4,17 @@ $.fn.productAutocomplete = function() {
     multiple: true,
     initSelection: function(element, callback) {
       $.get(Spree.routes.product_search, { ids: element.val() }, function(data) { 
-        callback(data)
+        callback(data['products'])
       })
     },
     ajax: {
       url: Spree.routes.product_search,
       datatype: 'json',
       data: function(term, page) {
-        return { q: term }
+        return { q: { name_cont: term, sku_cont: term } }
       },
       results: function(data, page) {
-        return { results: data }
+        return { results: data['products'] }
       }
     },
     formatResult: function(product) {

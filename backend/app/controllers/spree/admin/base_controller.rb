@@ -9,6 +9,7 @@ module Spree
 
       before_filter :check_alerts
       before_filter :authorize_admin
+      before_filter :set_locale
 
       protected
         def authorize_admin
@@ -33,6 +34,10 @@ module Spree
               session[:alerts] = nil
             end
           end
+        end
+
+        def set_locale
+          I18n.locale = Spree::Backend::Config[:locale]
         end
 
         def should_check_alerts?
